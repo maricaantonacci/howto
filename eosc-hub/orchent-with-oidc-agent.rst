@@ -5,7 +5,7 @@ Install and configure orchent and oidc-agent
 ********************************
 
 **orchent** is a command-line tool that facilitates the interaction with the PaaS Orchestrator Service.
-In order to submit requests to the Orchestrator you need to provide a token issued by INDIGO IAM for your user; for this purpose, it is suggested the usage of the **oidc-agent** tool that simplifies the management of the OIDC tokens.
+In order to submit requests to the Orchestrator you need to provide a token issued by INDIGO IAM for your user; for this purpose, it is suggested to use the **oidc-agent** tool that simplifies the management of the OIDC tokens.
 
 In the present guide, you will learn how to configure oidc-agent and then orchent.
 
