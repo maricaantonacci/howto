@@ -84,7 +84,7 @@ Depending on your linux distribution, install the package from https://github.co
 
 * You should set OIDC_SOCK (this is not needed, if you did it before or if you have modified the .bashrc)::
 
-	$ eval (oidc-agent)
+	$ eval $(oidc-agent)
         oidc-add eosc-hub
 
 * Set the agent account to be used with orchent::
