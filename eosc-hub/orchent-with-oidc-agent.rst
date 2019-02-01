@@ -1,12 +1,18 @@
 .. highlight:: console
 
 ********************************
-Install and configure oidc-agent
+Install and configure orchent and oidc-agent
 ********************************
+
+**orchent** is a command-line tool that facilitates the interaction with the PaaS Orchestrator Service.
+In order to submit requests to the Orchestrator you need to provide a token issued by INDIGO IAM for your user; for this purpose, it is suggested the usage of the **oidc-agent** tool that simplifies the management of the OIDC tokens.
+
+In the present guide, you will learn how to configure oidc-agent and then orchent.
+
 
 1. Installing oidc-agent
 ------------------------
-oidc-agent is a tool to manage OpenID Connect tokens and make them easily usable from the command line. Installation instructions and full documentation can be found `here <https://indigo-dc.gitbooks.io/oidc-agent/>`_.
+**oidc-agent** is a tool to manage OpenID Connect tokens and make them easily usable from the command line. Installation instructions and full documentation can be found `here <https://indigo-dc.gitbooks.io/oidc-agent/>`_.
 
 2. Configuring oidc-agent with INDIGO IAM
 ---------------------------------------------------
@@ -25,9 +31,9 @@ oidc-agent is a tool to manage OpenID Connect tokens and make them easily usable
 	$ oidc-gen
 
 You will be asked for the name of the account to configure. Let's call it **eosc-hub**. 
-After that you will be asked for the additional client-name-identifier, you should choose the option::
+After that you will be asked for the additional client-name-identifier (optional), you should choose the following option for the issuer::
 
-		[2] https://iam-test.indigo-datacloud.eu/
+		[1] https://iam-test.indigo-datacloud.eu/
 
 Then just click Enter to accept the default values for Space delimited list of scopes [openid profile offline_access].
 
@@ -51,14 +57,32 @@ Next time you want to start oidc-agent from scratch, you will only have to do::
 	Enter encryption password for account config eosc-hub: ********
 	success
 
-* You can print the token::
+In alternative you can make oidc-agent persistent including this line in your .bashrc:
+
+	test -e ~/tmp/oidc-agent.env && . ~/tmp/oidc-agent.env
+	
+Then run the agent as follows::
+
+	mkdir ~/tmp/
+	oidc-agent > ~/tmp/oidc-agent.env
+	source ~/.bashrc
+
+From now on every new shell should have access to the agent.
+
+* Test it - You can print the token::
 
 	$ oidc-token eosc-hub
 
+3. Installing orchent
+------------------------
+Depending on your linux distribution, install the package from https://github.com/indigo-dc/orchent/releases
 
-*2.1 Usage with orchent*
+4. Configuring orchent
+------------------------
 
-* You should set OIDC_SOCK (this is not needed, if you did it before)::
+*4.1 Using oidc-agent*
+
+* You should set OIDC_SOCK (this is not needed, if you did it before or if you have modified the .bashrc)::
 
 	$ eval (oidc-agent)
         oidc-add eosc-hub
@@ -67,7 +91,7 @@ Next time you want to start oidc-agent from scratch, you will only have to do::
 
 	$ export ORCHENT_AGENT_ACCOUNT=eosc-hub
 
-* You also need to set ORCHENT_URL, e.g::
+* You also need to set ORCHENT_URL::
 
 	$ export ORCHENT_URL="https://indigo-paas.cloud.ba.infn.it/orchestrator"
 
